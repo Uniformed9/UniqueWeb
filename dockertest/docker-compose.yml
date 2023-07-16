@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0.31
+    ports:
+      - 3307:3307
+    environment: # 指定用户root的密码
+      - MYSQL_ROOT_PASSWORD=123456
+  redis:
+    image: redis:latest
+  myblog:
+    image: myblog:v1
+    build: . # 表示以当前目录下的Dockerfile开始构建镜像
+    ports:
+      - 8070:8070
+    depends_on: # 依赖与mysql、redis，其实可以不填，默认已经表示可以
+      - mysql
+      - redis
